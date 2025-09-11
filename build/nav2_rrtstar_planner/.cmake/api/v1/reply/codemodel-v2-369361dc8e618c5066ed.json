@@ -1,0 +1,79 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-.-38e66adc1f6e39228734.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.12"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2
+					]
+				}
+			],
+			"name" : "",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "nav2_rrtstar_planner",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "nav2_rrtstar_planner_plugin::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-nav2_rrtstar_planner_plugin-f3216006817dbc8846b1.json",
+					"name" : "nav2_rrtstar_planner_plugin",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "nav2_rrtstar_planner_uninstall::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-nav2_rrtstar_planner_uninstall-08a214f39aebb617affd.json",
+					"name" : "nav2_rrtstar_planner_uninstall",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "uninstall::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-uninstall-292d30418deb8c22f0fa.json",
+					"name" : "uninstall",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "/home/shuai/turtlebot_ws/build/nav2_rrtstar_planner",
+		"source" : "/home/shuai/turtlebot_ws/src/TurtleBot-RRT-Star"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 3
+	}
+}

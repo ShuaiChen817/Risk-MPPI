@@ -1,0 +1,1 @@
+/home/shuai/turtlebot_ws/build/nav2_rrtstar_planner/ament_cmake_core/nav2_rrtstar_plannerConfig-version.cmake
