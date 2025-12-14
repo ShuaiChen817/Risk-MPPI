@@ -91,3 +91,9 @@ ament_export_include_directories(include)
 ament_export_libraries(${library_name})
 ament_export_dependencies(${dependencies})
 ament_package()
+
+# 安装 launch 文件
+install(
+  DIRECTORY launch
+  DESTINATION share/${PROJECT_NAME}
+)

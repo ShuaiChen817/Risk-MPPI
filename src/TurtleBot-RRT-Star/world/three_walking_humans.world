@@ -1,0 +1,1873 @@
+<sdf version='1.7'>
+  <world name='three_walking_humans'>
+    <!-- ROS-Gazebo 基本插件 -->
+    <plugin name='gazebo_ros_init' filename='libgazebo_ros_init.so'/>
+    <plugin name='gazebo_ros_factory' filename='libgazebo_ros_factory.so'/>
+    <plugin name='gazebo_ros_state' filename='libgazebo_ros_state.so'/>
+    <!-- 环境光、地面等，直接参考 empty.world -->
+    <light name='sun' type='directional'>
+      <cast_shadows>1</cast_shadows>
+      <pose>0 0 10 0 -0 0</pose>
+      <diffuse>0.8 0.8 0.8 1</diffuse>
+      <specular>0.2 0.2 0.2 1</specular>
+      <attenuation>
+        <range>1000</range>
+        <constant>0.9</constant>
+        <linear>0.01</linear>
+        <quadratic>0.001</quadratic>
+      </attenuation>
+      <direction>-0.5 0.1 -0.9</direction>
+      <spot>
+        <inner_angle>0</inner_angle>
+        <outer_angle>0</outer_angle>
+        <falloff>0</falloff>
+      </spot>
+    </light>
+    <model name='ground_plane'>
+      <static>1</static>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry>
+            <plane>
+              <normal>0 0 1</normal>
+              <size>100 100</size>
+            </plane>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>100</mu>
+                <mu2>50</mu2>
+              </ode>
+              <torsional>
+                <ode/>
+              </torsional>
+            </friction>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <visual name='visual'>
+          <cast_shadows>0</cast_shadows>
+          <geometry>
+            <plane>
+              <normal>0 0 1</normal>
+              <size>100 100</size>
+            </plane>
+          </geometry>
+          <material>
+            <script>
+              <uri>file://media/materials/scripts/gazebo.material</uri>
+              <name>Gazebo/Grey</name>
+            </script>
+          </material>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+    </model>
+    <gravity>0 0 -9.8</gravity>
+    <magnetic_field>6e-06 2.3e-05 -4.2e-05</magnetic_field>
+    <atmosphere type='adiabatic'/>
+    <physics type='ode'>
+      <max_step_size>0.001</max_step_size>
+      <real_time_factor>1</real_time_factor>
+      <real_time_update_rate>1000</real_time_update_rate>
+    </physics>
+    <scene>
+      <ambient>0.4 0.4 0.4 1</ambient>
+      <background>0.7 0.7 0.7 1</background>
+      <shadows>1</shadows>
+    </scene>
+    <audio>
+      <device>default</device>
+    </audio>
+    <wind/>
+    <!-- 10 个行走人物（actor），使用 walk.dae，轨迹在 world 中预先写好 -->
+
+    <!-- human_01：围绕 (-6,-6) 小矩形 -->
+    <actor name='human_01'>
+      <pose>0 0 1 0 0 0</pose>
+      <skin>
+        <filename>file://media/models/walk.dae</filename>
+        <scale>1</scale>
+      </skin>
+      <animation name='walking'>
+        <filename>file://media/models/walk.dae</filename>
+        <interpolate_x>0</interpolate_x>
+      </animation>
+      <script>
+        <loop>1</loop>
+        <auto_start>1</auto_start>
+        <trajectory id='0' type='walking'>
+          <waypoint>
+            <time>0.000</time>
+            <pose>-10.895 -1.150 0 0 0 0.78540</pose>
+          </waypoint>
+          <waypoint>
+            <time>30.228</time>
+            <pose>-5.614 4.130 0 0 0 0.78540</pose>
+          </waypoint>
+          <waypoint>
+            <time>32.728</time>
+            <pose>-5.614 4.130 0 0 0 -2.35619</pose>
+          </waypoint>
+          <waypoint>
+            <time>62.956</time>
+            <pose>-10.895 -1.150 0 0 0 -2.35619</pose>
+          </waypoint>
+          <waypoint>
+            <time>65.456</time>
+            <pose>-10.895 -1.150 0 0 0 0.78540</pose>
+          </waypoint>
+        </trajectory>
+      </script>
+    </actor>
+
+    <actor name='human_02'>
+      <pose>0 0 1 0 0 0</pose>
+      <skin>
+        <filename>file://media/models/walk.dae</filename>
+        <scale>1</scale>
+      </skin>
+      <animation name='walking'>
+        <filename>file://media/models/walk.dae</filename>
+        <interpolate_x>0</interpolate_x>
+      </animation>
+      <script>
+        <loop>1</loop>
+        <auto_start>1</auto_start>
+        <trajectory id='0' type='walking'>
+          <waypoint>
+            <time>0.000</time>
+            <pose>1.842 -9.024 0 0 0 2.36943</pose>
+          </waypoint>
+          <waypoint>
+            <time>16.832</time>
+            <pose>-2.620 -4.678 0 0 0 2.36943</pose>
+          </waypoint>
+          <waypoint>
+            <time>19.332</time>
+            <pose>-2.620 -4.678 0 0 0 5.51102</pose>
+          </waypoint>
+          <waypoint>
+            <time>36.165</time>
+            <pose>1.842 -9.024 0 0 0 5.51102</pose>
+          </waypoint>
+          <waypoint>
+            <time>38.665</time>
+            <pose>1.842 -9.024 0 0 0 2.36943</pose>
+          </waypoint>
+        </trajectory>
+      </script>
+    </actor>
+
+    <actor name='human_03'>
+      <pose>0 0 1 0 0 0</pose>
+      <skin>
+        <filename>file://media/models/walk.dae</filename>
+        <scale>1</scale>
+      </skin>
+      <animation name='walking'>
+        <filename>file://media/models/walk.dae</filename>
+        <interpolate_x>0</interpolate_x>
+      </animation>
+      <script>
+        <loop>1</loop>
+        <auto_start>1</auto_start>
+        <trajectory id='0' type='walking'>
+          <waypoint>
+            <time>0.000</time>
+            <pose>0.314 -3.579 0 0 0 -0.85554</pose>
+          </waypoint>
+          <waypoint>
+            <time>21.883</time>
+            <pose>5.987 -10.109 0 0 0 -0.85554</pose>
+          </waypoint>
+          <waypoint>
+            <time>24.383</time>
+            <pose>5.987 -10.109 0 0 0 2.28605</pose>
+          </waypoint>
+          <waypoint>
+            <time>46.266</time>
+            <pose>0.314 -3.579 0 0 0 2.28605</pose>
+          </waypoint>
+          <waypoint>
+            <time>48.766</time>
+            <pose>0.314 -3.579 0 0 0 -0.85554</pose>
+          </waypoint>
+        </trajectory>
+      </script>
+    </actor>
+
+    <actor name='human_04'>
+      <pose>0 0 1 0 0 0</pose>
+      <skin>
+        <filename>file://media/models/walk.dae</filename>
+        <scale>1</scale>
+      </skin>
+      <animation name='walking'>
+        <filename>file://media/models/walk.dae</filename>
+        <interpolate_x>0</interpolate_x>
+      </animation>
+      <script>
+        <loop>1</loop>
+        <auto_start>1</auto_start>
+        <trajectory id='0' type='walking'>
+          <waypoint>
+            <time>0.000</time>
+            <pose>-8.846 -7.056 0 0 0 0.00000</pose>
+          </waypoint>
+          <waypoint>
+            <time>14.882</time>
+            <pose>-5.441 -7.056 0 0 0 1.57080</pose>
+          </waypoint>
+          <waypoint>
+            <time>24.757</time>
+            <pose>-5.441 -4.796 0 0 0 3.14159</pose>
+          </waypoint>
+          <waypoint>
+            <time>39.639</time>
+            <pose>-8.846 -4.796 0 0 0 -1.57080</pose>
+          </waypoint>
+          <waypoint>
+            <time>49.514</time>
+            <pose>-8.846 -7.056 0 0 0 0.00000</pose>
+          </waypoint>
+        </trajectory>
+      </script>
+    </actor>
+
+    <actor name='human_05'>
+      <pose>0 0 1 0 0 0</pose>
+      <skin>
+        <filename>file://media/models/walk.dae</filename>
+        <scale>1</scale>
+      </skin>
+      <animation name='walking'>
+        <filename>file://media/models/walk.dae</filename>
+        <interpolate_x>0</interpolate_x>
+      </animation>
+      <script>
+        <loop>1</loop>
+        <auto_start>1</auto_start>
+        <trajectory id='0' type='walking'>
+          <waypoint>
+            <time>0.000</time>
+            <pose>-3.869 7.485 0 0 0 1.57080</pose>
+          </waypoint>
+          <waypoint>
+            <time>1.655</time>
+            <pose>-4.061 8.187 0 0 0 2.08791</pose>
+          </waypoint>
+          <waypoint>
+            <time>3.491</time>
+            <pose>-4.607 8.782 0 0 0 2.51212</pose>
+          </waypoint>
+          <waypoint>
+            <time>5.557</time>
+            <pose>-5.424 9.180 0 0 0 2.84860</pose>
+          </waypoint>
+          <waypoint>
+            <time>7.772</time>
+            <pose>-6.388 9.320 0 0 0 3.14159</pose>
+          </waypoint>
+          <waypoint>
+            <time>9.986</time>
+            <pose>-7.352 9.180 0 0 0 -2.84860</pose>
+          </waypoint>
+          <waypoint>
+            <time>12.052</time>
+            <pose>-8.169 8.782 0 0 0 -2.51212</pose>
+          </waypoint>
+          <waypoint>
+            <time>13.889</time>
+            <pose>-8.715 8.187 0 0 0 -2.08791</pose>
+          </waypoint>
+          <waypoint>
+            <time>15.543</time>
+            <pose>-8.907 7.485 0 0 0 -1.57080</pose>
+          </waypoint>
+          <waypoint>
+            <time>17.198</time>
+            <pose>-8.715 6.783 0 0 0 -1.05368</pose>
+          </waypoint>
+          <waypoint>
+            <time>19.034</time>
+            <pose>-8.169 6.188 0 0 0 -0.62947</pose>
+          </waypoint>
+          <waypoint>
+            <time>21.100</time>
+            <pose>-7.352 5.790 0 0 0 -0.29299</pose>
+          </waypoint>
+          <waypoint>
+            <time>23.315</time>
+            <pose>-6.388 5.650 0 0 0 -0.00000</pose>
+          </waypoint>
+          <waypoint>
+            <time>25.529</time>
+            <pose>-5.424 5.790 0 0 0 0.29299</pose>
+          </waypoint>
+          <waypoint>
+            <time>27.595</time>
+            <pose>-4.607 6.188 0 0 0 0.62947</pose>
+          </waypoint>
+          <waypoint>
+            <time>29.432</time>
+            <pose>-4.061 6.783 0 0 0 1.05368</pose>
+          </waypoint>
+          <waypoint>
+            <time>31.086</time>
+            <pose>-3.869 7.485 0 0 0 1.57080</pose>
+          </waypoint>
+        </trajectory>
+      </script>
+    </actor>
+
+    <actor name='human_06'>
+      <pose>0 0 1 0 0 0</pose>
+      <skin>
+        <filename>file://media/models/walk.dae</filename>
+        <scale>1</scale>
+      </skin>
+      <animation name='walking'>
+        <filename>file://media/models/walk.dae</filename>
+        <interpolate_x>0</interpolate_x>
+      </animation>
+      <script>
+        <loop>1</loop>
+        <auto_start>1</auto_start>
+        <trajectory id='0' type='walking'>
+          <waypoint>
+            <time>0.000</time>
+            <pose>5.187 -9.475 0 0 0 0.46365</pose>
+          </waypoint>
+          <waypoint>
+            <time>1.836</time>
+            <pose>5.734 -8.947 0 0 0 0.18725</pose>
+          </waypoint>
+          <waypoint>
+            <time>3.380</time>
+            <pose>6.243 -8.561 0 0 0 -0.20826</pose>
+          </waypoint>
+          <waypoint>
+            <time>4.491</time>
+            <pose>6.680 -8.419 0 0 0 -0.61548</pose>
+          </waypoint>
+          <waypoint>
+            <time>5.371</time>
+            <pose>7.016 -8.561 0 0 0 -0.93888</pose>
+          </waypoint>
+          <waypoint>
+            <time>6.434</time>
+            <pose>7.226 -8.947 0 0 0 -1.20858</pose>
+          </waypoint>
+          <waypoint>
+            <time>7.721</time>
+            <pose>7.298 -9.475 0 0 0 -1.57080</pose>
+          </waypoint>
+          <waypoint>
+            <time>9.009</time>
+            <pose>7.226 -10.003 0 0 0 -2.52611</pose>
+          </waypoint>
+          <waypoint>
+            <time>10.072</time>
+            <pose>7.016 -10.389 0 0 0 2.79071</pose>
+          </waypoint>
+          <waypoint>
+            <time>10.952</time>
+            <pose>6.680 -10.531 0 0 0 2.52611</pose>
+          </waypoint>
+          <waypoint>
+            <time>12.062</time>
+            <pose>6.243 -10.389 0 0 0 2.47380</pose>
+          </waypoint>
+          <waypoint>
+            <time>13.607</time>
+            <pose>5.734 -10.003 0 0 0 2.52611</pose>
+          </waypoint>
+          <waypoint>
+            <time>15.443</time>
+            <pose>5.187 -9.475 0 0 0 2.67795</pose>
+          </waypoint>
+          <waypoint>
+            <time>17.279</time>
+            <pose>4.641 -8.947 0 0 0 2.95434</pose>
+          </waypoint>
+          <waypoint>
+            <time>18.823</time>
+            <pose>4.131 -8.561 0 0 0 -2.93333</pose>
+          </waypoint>
+          <waypoint>
+            <time>19.933</time>
+            <pose>3.694 -8.419 0 0 0 -2.52611</pose>
+          </waypoint>
+          <waypoint>
+            <time>20.813</time>
+            <pose>3.359 -8.561 0 0 0 -2.20271</pose>
+          </waypoint>
+          <waypoint>
+            <time>21.877</time>
+            <pose>3.148 -8.947 0 0 0 -1.93301</pose>
+          </waypoint>
+          <waypoint>
+            <time>23.164</time>
+            <pose>3.076 -9.475 0 0 0 -1.57080</pose>
+          </waypoint>
+          <waypoint>
+            <time>24.451</time>
+            <pose>3.148 -10.003 0 0 0 -0.61548</pose>
+          </waypoint>
+          <waypoint>
+            <time>25.515</time>
+            <pose>3.359 -10.389 0 0 0 0.35088</pose>
+          </waypoint>
+          <waypoint>
+            <time>26.395</time>
+            <pose>3.694 -10.531 0 0 0 0.61548</pose>
+          </waypoint>
+          <waypoint>
+            <time>27.505</time>
+            <pose>4.131 -10.389 0 0 0 0.66780</pose>
+          </waypoint>
+          <waypoint>
+            <time>29.050</time>
+            <pose>4.641 -10.003 0 0 0 0.61548</pose>
+          </waypoint>
+          <waypoint>
+            <time>30.886</time>
+            <pose>5.187 -9.475 0 0 0 0.46365</pose>
+          </waypoint>
+        </trajectory>
+      </script>
+    </actor>
+
+    <actor name='human_07'>
+      <pose>0 0 1 0 0 0</pose>
+      <skin>
+        <filename>file://media/models/walk.dae</filename>
+        <scale>1</scale>
+      </skin>
+      <animation name='walking'>
+        <filename>file://media/models/walk.dae</filename>
+        <interpolate_x>0</interpolate_x>
+      </animation>
+      <script>
+        <loop>1</loop>
+        <auto_start>1</auto_start>
+        <trajectory id='0' type='walking'>
+          <waypoint>
+            <time>0.000</time>
+            <pose>-9.056 9.155 0 0 0 -1.17648</pose>
+          </waypoint>
+          <waypoint>
+            <time>18.333</time>
+            <pose>-6.704 3.503 0 0 0 -1.17648</pose>
+          </waypoint>
+          <waypoint>
+            <time>20.833</time>
+            <pose>-6.704 3.503 0 0 0 1.96511</pose>
+          </waypoint>
+          <waypoint>
+            <time>39.165</time>
+            <pose>-9.056 9.155 0 0 0 1.96511</pose>
+          </waypoint>
+          <waypoint>
+            <time>41.665</time>
+            <pose>-9.056 9.155 0 0 0 -1.17648</pose>
+          </waypoint>
+        </trajectory>
+      </script>
+    </actor>
+
+    <actor name='human_08'>
+      <pose>0 0 1 0 0 0</pose>
+      <skin>
+        <filename>file://media/models/walk.dae</filename>
+        <scale>1</scale>
+      </skin>
+      <animation name='walking'>
+        <filename>file://media/models/walk.dae</filename>
+        <interpolate_x>0</interpolate_x>
+      </animation>
+      <script>
+        <loop>1</loop>
+        <auto_start>1</auto_start>
+        <trajectory id='0' type='walking'>
+          <waypoint>
+            <time>0.000</time>
+            <pose>-4.705 -7.764 0 0 0 0.00000</pose>
+          </waypoint>
+          <waypoint>
+            <time>14.571</time>
+            <pose>-0.279 -7.764 0 0 0 1.57080</pose>
+          </waypoint>
+          <waypoint>
+            <time>26.982</time>
+            <pose>-0.279 -3.995 0 0 0 3.14159</pose>
+          </waypoint>
+          <waypoint>
+            <time>41.553</time>
+            <pose>-4.705 -3.995 0 0 0 -1.57080</pose>
+          </waypoint>
+          <waypoint>
+            <time>53.964</time>
+            <pose>-4.705 -7.764 0 0 0 0.00000</pose>
+          </waypoint>
+        </trajectory>
+      </script>
+    </actor>
+
+    <actor name='human_09'>
+      <pose>0 0 1 0 0 0</pose>
+      <skin>
+        <filename>file://media/models/walk.dae</filename>
+        <scale>1</scale>
+      </skin>
+      <animation name='walking'>
+        <filename>file://media/models/walk.dae</filename>
+        <interpolate_x>0</interpolate_x>
+      </animation>
+      <script>
+        <loop>1</loop>
+        <auto_start>1</auto_start>
+        <trajectory id='0' type='walking'>
+          <waypoint>
+            <time>0.000</time>
+            <pose>-4.821 3.613 0 0 0 0.00000</pose>
+          </waypoint>
+          <waypoint>
+            <time>11.373</time>
+            <pose>-1.134 3.613 0 0 0 1.57080</pose>
+          </waypoint>
+          <waypoint>
+            <time>21.593</time>
+            <pose>-1.134 6.925 0 0 0 3.14159</pose>
+          </waypoint>
+          <waypoint>
+            <time>32.966</time>
+            <pose>-4.821 6.925 0 0 0 -1.57080</pose>
+          </waypoint>
+          <waypoint>
+            <time>43.187</time>
+            <pose>-4.821 3.613 0 0 0 0.00000</pose>
+          </waypoint>
+        </trajectory>
+      </script>
+    </actor>
+
+    <actor name='human_10'>
+      <pose>0 0 1 0 0 0</pose>
+      <skin>
+        <filename>file://media/models/walk.dae</filename>
+        <scale>1</scale>
+      </skin>
+      <animation name='walking'>
+        <filename>file://media/models/walk.dae</filename>
+        <interpolate_x>0</interpolate_x>
+      </animation>
+      <script>
+        <loop>1</loop>
+        <auto_start>1</auto_start>
+        <trajectory id='0' type='walking'>
+          <waypoint>
+            <time>0.000</time>
+            <pose>-9.744 -7.334 0 0 0 0.00000</pose>
+          </waypoint>
+          <waypoint>
+            <time>16.758</time>
+            <pose>-5.583 -7.334 0 0 0 1.57080</pose>
+          </waypoint>
+          <waypoint>
+            <time>28.277</time>
+            <pose>-5.583 -4.474 0 0 0 3.14159</pose>
+          </waypoint>
+          <waypoint>
+            <time>45.036</time>
+            <pose>-9.744 -4.474 0 0 0 -1.57080</pose>
+          </waypoint>
+          <waypoint>
+            <time>56.555</time>
+            <pose>-9.744 -7.334 0 0 0 0.00000</pose>
+          </waypoint>
+        </trajectory>
+      </script>
+    </actor>
+
+    <actor name='human_11'>
+      <pose>0 0 1 0 0 0</pose>
+      <skin>
+        <filename>file://media/models/walk.dae</filename>
+        <scale>1</scale>
+      </skin>
+      <animation name='walking'>
+        <filename>file://media/models/walk.dae</filename>
+        <interpolate_x>0</interpolate_x>
+      </animation>
+      <script>
+        <loop>1</loop>
+        <auto_start>1</auto_start>
+        <trajectory id='0' type='walking'>
+          <waypoint>
+            <time>0.000</time>
+            <pose>3.237 0.561 0 0 0 0.46365</pose>
+          </waypoint>
+          <waypoint>
+            <time>2.274</time>
+            <pose>3.998 1.296 0 0 0 0.18725</pose>
+          </waypoint>
+          <waypoint>
+            <time>4.188</time>
+            <pose>4.707 1.835 0 0 0 -0.20826</pose>
+          </waypoint>
+          <waypoint>
+            <time>5.564</time>
+            <pose>5.316 2.032 0 0 0 -0.61548</pose>
+          </waypoint>
+          <waypoint>
+            <time>6.654</time>
+            <pose>5.784 1.835 0 0 0 -0.93888</pose>
+          </waypoint>
+          <waypoint>
+            <time>7.971</time>
+            <pose>6.077 1.296 0 0 0 -1.20858</pose>
+          </waypoint>
+          <waypoint>
+            <time>9.566</time>
+            <pose>6.178 0.561 0 0 0 -1.57080</pose>
+          </waypoint>
+          <waypoint>
+            <time>11.161</time>
+            <pose>6.077 -0.174 0 0 0 -2.52611</pose>
+          </waypoint>
+          <waypoint>
+            <time>12.479</time>
+            <pose>5.784 -0.712 0 0 0 2.79071</pose>
+          </waypoint>
+          <waypoint>
+            <time>13.569</time>
+            <pose>5.316 -0.909 0 0 0 2.52611</pose>
+          </waypoint>
+          <waypoint>
+            <time>14.945</time>
+            <pose>4.707 -0.712 0 0 0 2.47380</pose>
+          </waypoint>
+          <waypoint>
+            <time>16.858</time>
+            <pose>3.998 -0.174 0 0 0 2.52611</pose>
+          </waypoint>
+          <waypoint>
+            <time>19.132</time>
+            <pose>3.237 0.561 0 0 0 2.67795</pose>
+          </waypoint>
+          <waypoint>
+            <time>21.407</time>
+            <pose>2.476 1.296 0 0 0 2.95434</pose>
+          </waypoint>
+          <waypoint>
+            <time>23.320</time>
+            <pose>1.767 1.835 0 0 0 -2.93333</pose>
+          </waypoint>
+          <waypoint>
+            <time>24.696</time>
+            <pose>1.158 2.032 0 0 0 -2.52611</pose>
+          </waypoint>
+          <waypoint>
+            <time>25.786</time>
+            <pose>0.690 1.835 0 0 0 -2.20271</pose>
+          </waypoint>
+          <waypoint>
+            <time>27.104</time>
+            <pose>0.397 1.296 0 0 0 -1.93301</pose>
+          </waypoint>
+          <waypoint>
+            <time>28.699</time>
+            <pose>0.296 0.561 0 0 0 -1.57080</pose>
+          </waypoint>
+          <waypoint>
+            <time>30.293</time>
+            <pose>0.397 -0.174 0 0 0 -0.61548</pose>
+          </waypoint>
+          <waypoint>
+            <time>31.611</time>
+            <pose>0.690 -0.712 0 0 0 0.35088</pose>
+          </waypoint>
+          <waypoint>
+            <time>32.701</time>
+            <pose>1.158 -0.909 0 0 0 0.61548</pose>
+          </waypoint>
+          <waypoint>
+            <time>34.077</time>
+            <pose>1.767 -0.712 0 0 0 0.66780</pose>
+          </waypoint>
+          <waypoint>
+            <time>35.990</time>
+            <pose>2.476 -0.174 0 0 0 0.61548</pose>
+          </waypoint>
+          <waypoint>
+            <time>38.265</time>
+            <pose>3.237 0.561 0 0 0 0.46365</pose>
+          </waypoint>
+        </trajectory>
+      </script>
+    </actor>
+
+    <actor name='human_12'>
+      <pose>0 0 1 0 0 0</pose>
+      <skin>
+        <filename>file://media/models/walk.dae</filename>
+        <scale>1</scale>
+      </skin>
+      <animation name='walking'>
+        <filename>file://media/models/walk.dae</filename>
+        <interpolate_x>0</interpolate_x>
+      </animation>
+      <script>
+        <loop>1</loop>
+        <auto_start>1</auto_start>
+        <trajectory id='0' type='walking'>
+          <waypoint>
+            <time>0.000</time>
+            <pose>-1.913 5.715 0 0 0 1.28620</pose>
+          </waypoint>
+          <waypoint>
+            <time>17.925</time>
+            <pose>-0.098 11.919 0 0 0 1.28620</pose>
+          </waypoint>
+          <waypoint>
+            <time>20.425</time>
+            <pose>-0.098 11.919 0 0 0 4.42779</pose>
+          </waypoint>
+          <waypoint>
+            <time>38.351</time>
+            <pose>-1.913 5.715 0 0 0 4.42779</pose>
+          </waypoint>
+          <waypoint>
+            <time>40.851</time>
+            <pose>-1.913 5.715 0 0 0 1.28620</pose>
+          </waypoint>
+        </trajectory>
+      </script>
+    </actor>
+
+    <actor name='human_13'>
+      <pose>0 0 1 0 0 0</pose>
+      <skin>
+        <filename>file://media/models/walk.dae</filename>
+        <scale>1</scale>
+      </skin>
+      <animation name='walking'>
+        <filename>file://media/models/walk.dae</filename>
+        <interpolate_x>0</interpolate_x>
+      </animation>
+      <script>
+        <loop>1</loop>
+        <auto_start>1</auto_start>
+        <trajectory id='0' type='walking'>
+          <waypoint>
+            <time>0.000</time>
+            <pose>1.342 3.890 0 0 0 -2.41405</pose>
+          </waypoint>
+          <waypoint>
+            <time>32.813</time>
+            <pose>-4.502 -1.315 0 0 0 -2.41405</pose>
+          </waypoint>
+          <waypoint>
+            <time>35.313</time>
+            <pose>-4.502 -1.315 0 0 0 0.72754</pose>
+          </waypoint>
+          <waypoint>
+            <time>68.126</time>
+            <pose>1.342 3.890 0 0 0 0.72754</pose>
+          </waypoint>
+          <waypoint>
+            <time>70.626</time>
+            <pose>1.342 3.890 0 0 0 -2.41405</pose>
+          </waypoint>
+        </trajectory>
+      </script>
+    </actor>
+
+    <actor name='human_14'>
+      <pose>0 0 1 0 0 0</pose>
+      <skin>
+        <filename>file://media/models/walk.dae</filename>
+        <scale>1</scale>
+      </skin>
+      <animation name='walking'>
+        <filename>file://media/models/walk.dae</filename>
+        <interpolate_x>0</interpolate_x>
+      </animation>
+      <script>
+        <loop>1</loop>
+        <auto_start>1</auto_start>
+        <trajectory id='0' type='walking'>
+          <waypoint>
+            <time>0.000</time>
+            <pose>9.588 10.206 0 0 0 -2.63828</pose>
+          </waypoint>
+          <waypoint>
+            <time>28.368</time>
+            <pose>2.554 6.333 0 0 0 -2.63828</pose>
+          </waypoint>
+          <waypoint>
+            <time>30.868</time>
+            <pose>2.554 6.333 0 0 0 0.50332</pose>
+          </waypoint>
+          <waypoint>
+            <time>59.237</time>
+            <pose>9.588 10.206 0 0 0 0.50332</pose>
+          </waypoint>
+          <waypoint>
+            <time>61.737</time>
+            <pose>9.588 10.206 0 0 0 -2.63828</pose>
+          </waypoint>
+        </trajectory>
+      </script>
+    </actor>
+
+    <actor name='human_15'>
+      <pose>0 0 1 0 0 0</pose>
+      <skin>
+        <filename>file://media/models/walk.dae</filename>
+        <scale>1</scale>
+      </skin>
+      <animation name='walking'>
+        <filename>file://media/models/walk.dae</filename>
+        <interpolate_x>0</interpolate_x>
+      </animation>
+      <script>
+        <loop>1</loop>
+        <auto_start>1</auto_start>
+        <trajectory id='0' type='walking'>
+          <waypoint>
+            <time>0.000</time>
+            <pose>-8.927 6.624 0 0 0 0.00000</pose>
+          </waypoint>
+          <waypoint>
+            <time>22.372</time>
+            <pose>-3.592 6.624 0 0 0 1.57080</pose>
+          </waypoint>
+          <waypoint>
+            <time>31.538</time>
+            <pose>-3.592 8.810 0 0 0 3.14159</pose>
+          </waypoint>
+          <waypoint>
+            <time>53.910</time>
+            <pose>-8.927 8.810 0 0 0 -1.57080</pose>
+          </waypoint>
+          <waypoint>
+            <time>63.076</time>
+            <pose>-8.927 6.624 0 0 0 0.00000</pose>
+          </waypoint>
+        </trajectory>
+      </script>
+    </actor>
+
+    <actor name='human_16'>
+      <pose>0 0 1 0 0 0</pose>
+      <skin>
+        <filename>file://media/models/walk.dae</filename>
+        <scale>1</scale>
+      </skin>
+      <animation name='walking'>
+        <filename>file://media/models/walk.dae</filename>
+        <interpolate_x>0</interpolate_x>
+      </animation>
+      <script>
+        <loop>1</loop>
+        <auto_start>1</auto_start>
+        <trajectory id='0' type='walking'>
+          <waypoint>
+            <time>0.000</time>
+            <pose>-10.521 2.214 0 0 0 0.00000</pose>
+          </waypoint>
+          <waypoint>
+            <time>9.527</time>
+            <pose>-5.877 2.214 0 0 0 1.57080</pose>
+          </waypoint>
+          <waypoint>
+            <time>16.683</time>
+            <pose>-5.877 5.703 0 0 0 3.14159</pose>
+          </waypoint>
+          <waypoint>
+            <time>26.210</time>
+            <pose>-10.521 5.703 0 0 0 -1.57080</pose>
+          </waypoint>
+          <waypoint>
+            <time>33.366</time>
+            <pose>-10.521 2.214 0 0 0 0.00000</pose>
+          </waypoint>
+        </trajectory>
+      </script>
+    </actor>
+
+    <actor name='human_17'>
+      <pose>0 0 1 0 0 0</pose>
+      <skin>
+        <filename>file://media/models/walk.dae</filename>
+        <scale>1</scale>
+      </skin>
+      <animation name='walking'>
+        <filename>file://media/models/walk.dae</filename>
+        <interpolate_x>0</interpolate_x>
+      </animation>
+      <script>
+        <loop>1</loop>
+        <auto_start>1</auto_start>
+        <trajectory id='0' type='walking'>
+          <waypoint>
+            <time>0.000</time>
+            <pose>-8.667 5.987 0 0 0 0.46365</pose>
+          </waypoint>
+          <waypoint>
+            <time>2.569</time>
+            <pose>-8.182 6.456 0 0 0 0.18725</pose>
+          </waypoint>
+          <waypoint>
+            <time>4.730</time>
+            <pose>-7.730 6.799 0 0 0 -0.20826</pose>
+          </waypoint>
+          <waypoint>
+            <time>6.284</time>
+            <pose>-7.342 6.924 0 0 0 -0.61548</pose>
+          </waypoint>
+          <waypoint>
+            <time>7.515</time>
+            <pose>-7.044 6.799 0 0 0 -0.93888</pose>
+          </waypoint>
+          <waypoint>
+            <time>9.003</time>
+            <pose>-6.857 6.456 0 0 0 -1.20858</pose>
+          </waypoint>
+          <waypoint>
+            <time>10.804</time>
+            <pose>-6.793 5.987 0 0 0 -1.57080</pose>
+          </waypoint>
+          <waypoint>
+            <time>12.605</time>
+            <pose>-6.857 5.519 0 0 0 -2.52611</pose>
+          </waypoint>
+          <waypoint>
+            <time>14.094</time>
+            <pose>-7.044 5.176 0 0 0 2.79071</pose>
+          </waypoint>
+          <waypoint>
+            <time>15.325</time>
+            <pose>-7.342 5.050 0 0 0 2.52611</pose>
+          </waypoint>
+          <waypoint>
+            <time>16.878</time>
+            <pose>-7.730 5.176 0 0 0 2.47380</pose>
+          </waypoint>
+          <waypoint>
+            <time>19.040</time>
+            <pose>-8.182 5.519 0 0 0 2.52611</pose>
+          </waypoint>
+          <waypoint>
+            <time>21.608</time>
+            <pose>-8.667 5.987 0 0 0 2.67795</pose>
+          </waypoint>
+          <waypoint>
+            <time>24.177</time>
+            <pose>-9.153 6.456 0 0 0 2.95434</pose>
+          </waypoint>
+          <waypoint>
+            <time>26.338</time>
+            <pose>-9.605 6.799 0 0 0 -2.93333</pose>
+          </waypoint>
+          <waypoint>
+            <time>27.892</time>
+            <pose>-9.993 6.924 0 0 0 -2.52611</pose>
+          </waypoint>
+          <waypoint>
+            <time>29.123</time>
+            <pose>-10.291 6.799 0 0 0 -2.20271</pose>
+          </waypoint>
+          <waypoint>
+            <time>30.611</time>
+            <pose>-10.478 6.456 0 0 0 -1.93301</pose>
+          </waypoint>
+          <waypoint>
+            <time>32.412</time>
+            <pose>-10.542 5.987 0 0 0 -1.57080</pose>
+          </waypoint>
+          <waypoint>
+            <time>34.213</time>
+            <pose>-10.478 5.519 0 0 0 -0.61548</pose>
+          </waypoint>
+          <waypoint>
+            <time>35.702</time>
+            <pose>-10.291 5.176 0 0 0 0.35088</pose>
+          </waypoint>
+          <waypoint>
+            <time>36.933</time>
+            <pose>-9.993 5.050 0 0 0 0.61548</pose>
+          </waypoint>
+          <waypoint>
+            <time>38.487</time>
+            <pose>-9.605 5.176 0 0 0 0.66780</pose>
+          </waypoint>
+          <waypoint>
+            <time>40.648</time>
+            <pose>-9.153 5.519 0 0 0 0.61548</pose>
+          </waypoint>
+          <waypoint>
+            <time>43.217</time>
+            <pose>-8.667 5.987 0 0 0 0.46365</pose>
+          </waypoint>
+        </trajectory>
+      </script>
+    </actor>
+
+    <actor name='human_18'>
+      <pose>0 0 1 0 0 0</pose>
+      <skin>
+        <filename>file://media/models/walk.dae</filename>
+        <scale>1</scale>
+      </skin>
+      <animation name='walking'>
+        <filename>file://media/models/walk.dae</filename>
+        <interpolate_x>0</interpolate_x>
+      </animation>
+      <script>
+        <loop>1</loop>
+        <auto_start>1</auto_start>
+        <trajectory id='0' type='walking'>
+          <waypoint>
+            <time>0.000</time>
+            <pose>-1.915 -11.765 0 0 0 0.78540</pose>
+          </waypoint>
+          <waypoint>
+            <time>25.151</time>
+            <pose>3.285 -6.565 0 0 0 0.78540</pose>
+          </waypoint>
+          <waypoint>
+            <time>27.651</time>
+            <pose>3.285 -6.565 0 0 0 -2.35619</pose>
+          </waypoint>
+          <waypoint>
+            <time>52.802</time>
+            <pose>-1.915 -11.765 0 0 0 -2.35619</pose>
+          </waypoint>
+          <waypoint>
+            <time>55.302</time>
+            <pose>-1.915 -11.765 0 0 0 0.78540</pose>
+          </waypoint>
+        </trajectory>
+      </script>
+    </actor>
+
+    <actor name='human_19'>
+      <pose>0 0 1 0 0 0</pose>
+      <skin>
+        <filename>file://media/models/walk.dae</filename>
+        <scale>1</scale>
+      </skin>
+      <animation name='walking'>
+        <filename>file://media/models/walk.dae</filename>
+        <interpolate_x>0</interpolate_x>
+      </animation>
+      <script>
+        <loop>1</loop>
+        <auto_start>1</auto_start>
+        <trajectory id='0' type='walking'>
+          <waypoint>
+            <time>0.000</time>
+            <pose>6.362 -1.486 0 0 0 0.78540</pose>
+          </waypoint>
+          <waypoint>
+            <time>15.212</time>
+            <pose>10.716 2.869 0 0 0 0.78540</pose>
+          </waypoint>
+          <waypoint>
+            <time>17.712</time>
+            <pose>10.716 2.869 0 0 0 -2.35619</pose>
+          </waypoint>
+          <waypoint>
+            <time>32.923</time>
+            <pose>6.362 -1.486 0 0 0 -2.35619</pose>
+          </waypoint>
+          <waypoint>
+            <time>35.423</time>
+            <pose>6.362 -1.486 0 0 0 0.78540</pose>
+          </waypoint>
+        </trajectory>
+      </script>
+    </actor>
+
+    <actor name='human_20'>
+      <pose>0 0 1 0 0 0</pose>
+      <skin>
+        <filename>file://media/models/walk.dae</filename>
+        <scale>1</scale>
+      </skin>
+      <animation name='walking'>
+        <filename>file://media/models/walk.dae</filename>
+        <interpolate_x>0</interpolate_x>
+      </animation>
+      <script>
+        <loop>1</loop>
+        <auto_start>1</auto_start>
+        <trajectory id='0' type='walking'>
+          <waypoint>
+            <time>0.000</time>
+            <pose>10.965 -4.799 0 0 0 1.57080</pose>
+          </waypoint>
+          <waypoint>
+            <time>1.617</time>
+            <pose>10.798 -4.250 0 0 0 2.13587</pose>
+          </waypoint>
+          <waypoint>
+            <time>3.494</time>
+            <pose>10.322 -3.785 0 0 0 2.56290</pose>
+          </waypoint>
+          <waypoint>
+            <time>5.685</time>
+            <pose>9.610 -3.474 0 0 0 2.87732</pose>
+          </waypoint>
+          <waypoint>
+            <time>8.073</time>
+            <pose>8.770 -3.365 0 0 0 3.14159</pose>
+          </waypoint>
+          <waypoint>
+            <time>10.461</time>
+            <pose>7.930 -3.474 0 0 0 -2.87732</pose>
+          </waypoint>
+          <waypoint>
+            <time>12.652</time>
+            <pose>7.217 -3.785 0 0 0 -2.56290</pose>
+          </waypoint>
+          <waypoint>
+            <time>14.529</time>
+            <pose>6.741 -4.250 0 0 0 -2.13587</pose>
+          </waypoint>
+          <waypoint>
+            <time>16.146</time>
+            <pose>6.574 -4.799 0 0 0 -1.57080</pose>
+          </waypoint>
+          <waypoint>
+            <time>17.763</time>
+            <pose>6.741 -5.348 0 0 0 -1.00572</pose>
+          </waypoint>
+          <waypoint>
+            <time>19.640</time>
+            <pose>7.217 -5.813 0 0 0 -0.57869</pose>
+          </waypoint>
+          <waypoint>
+            <time>21.831</time>
+            <pose>7.930 -6.124 0 0 0 -0.26427</pose>
+          </waypoint>
+          <waypoint>
+            <time>24.219</time>
+            <pose>8.770 -6.233 0 0 0 -0.00000</pose>
+          </waypoint>
+          <waypoint>
+            <time>26.607</time>
+            <pose>9.610 -6.124 0 0 0 0.26427</pose>
+          </waypoint>
+          <waypoint>
+            <time>28.798</time>
+            <pose>10.322 -5.813 0 0 0 0.57869</pose>
+          </waypoint>
+          <waypoint>
+            <time>30.675</time>
+            <pose>10.798 -5.348 0 0 0 1.00572</pose>
+          </waypoint>
+          <waypoint>
+            <time>32.292</time>
+            <pose>10.965 -4.799 0 0 0 1.57080</pose>
+          </waypoint>
+        </trajectory>
+      </script>
+    </actor>
+
+    <actor name='human_21'>
+      <pose>0 0 1 0 0 0</pose>
+      <skin>
+        <filename>file://media/models/walk.dae</filename>
+        <scale>1</scale>
+      </skin>
+      <animation name='walking'>
+        <filename>file://media/models/walk.dae</filename>
+        <interpolate_x>0</interpolate_x>
+      </animation>
+      <script>
+        <loop>1</loop>
+        <auto_start>1</auto_start>
+        <trajectory id='0' type='walking'>
+          <waypoint>
+            <time>0.000</time>
+            <pose>0.021 1.715 0 0 0 -0.35390</pose>
+          </waypoint>
+          <waypoint>
+            <time>17.575</time>
+            <pose>4.682 -0.007 0 0 0 -0.35390</pose>
+          </waypoint>
+          <waypoint>
+            <time>20.075</time>
+            <pose>4.682 -0.007 0 0 0 2.78770</pose>
+          </waypoint>
+          <waypoint>
+            <time>37.650</time>
+            <pose>0.021 1.715 0 0 0 2.78770</pose>
+          </waypoint>
+          <waypoint>
+            <time>40.150</time>
+            <pose>0.021 1.715 0 0 0 -0.35390</pose>
+          </waypoint>
+        </trajectory>
+      </script>
+    </actor>
+
+    <actor name='human_22'>
+      <pose>0 0 1 0 0 0</pose>
+      <skin>
+        <filename>file://media/models/walk.dae</filename>
+        <scale>1</scale>
+      </skin>
+      <animation name='walking'>
+        <filename>file://media/models/walk.dae</filename>
+        <interpolate_x>0</interpolate_x>
+      </animation>
+      <script>
+        <loop>1</loop>
+        <auto_start>1</auto_start>
+        <trajectory id='0' type='walking'>
+          <waypoint>
+            <time>0.000</time>
+            <pose>1.943 12.718 0 0 0 -0.78540</pose>
+          </waypoint>
+          <waypoint>
+            <time>25.713</time>
+            <pose>7.773 6.888 0 0 0 -0.78540</pose>
+          </waypoint>
+          <waypoint>
+            <time>28.213</time>
+            <pose>7.773 6.888 0 0 0 2.35619</pose>
+          </waypoint>
+          <waypoint>
+            <time>53.925</time>
+            <pose>1.943 12.718 0 0 0 2.35619</pose>
+          </waypoint>
+          <waypoint>
+            <time>56.425</time>
+            <pose>1.943 12.718 0 0 0 -0.78540</pose>
+          </waypoint>
+        </trajectory>
+      </script>
+    </actor>
+
+    <actor name='human_23'>
+      <pose>0 0 1 0 0 0</pose>
+      <skin>
+        <filename>file://media/models/walk.dae</filename>
+        <scale>1</scale>
+      </skin>
+      <animation name='walking'>
+        <filename>file://media/models/walk.dae</filename>
+        <interpolate_x>0</interpolate_x>
+      </animation>
+      <script>
+        <loop>1</loop>
+        <auto_start>1</auto_start>
+        <trajectory id='0' type='walking'>
+          <waypoint>
+            <time>0.000</time>
+            <pose>5.655 2.099 0 0 0 0.46365</pose>
+          </waypoint>
+          <waypoint>
+            <time>3.369</time>
+            <pose>6.308 2.729 0 0 0 0.18725</pose>
+          </waypoint>
+          <waypoint>
+            <time>6.204</time>
+            <pose>6.916 3.191 0 0 0 -0.20826</pose>
+          </waypoint>
+          <waypoint>
+            <time>8.242</time>
+            <pose>7.439 3.360 0 0 0 -0.61548</pose>
+          </waypoint>
+          <waypoint>
+            <time>9.857</time>
+            <pose>7.840 3.191 0 0 0 -0.93888</pose>
+          </waypoint>
+          <waypoint>
+            <time>11.809</time>
+            <pose>8.092 2.729 0 0 0 -1.20858</pose>
+          </waypoint>
+          <waypoint>
+            <time>14.171</time>
+            <pose>8.178 2.099 0 0 0 -1.57080</pose>
+          </waypoint>
+          <waypoint>
+            <time>16.534</time>
+            <pose>8.092 1.468 0 0 0 -2.52611</pose>
+          </waypoint>
+          <waypoint>
+            <time>18.486</time>
+            <pose>7.840 1.006 0 0 0 2.79071</pose>
+          </waypoint>
+          <waypoint>
+            <time>20.101</time>
+            <pose>7.439 0.837 0 0 0 2.52611</pose>
+          </waypoint>
+          <waypoint>
+            <time>22.139</time>
+            <pose>6.916 1.006 0 0 0 2.47380</pose>
+          </waypoint>
+          <waypoint>
+            <time>24.973</time>
+            <pose>6.308 1.468 0 0 0 2.52611</pose>
+          </waypoint>
+          <waypoint>
+            <time>28.342</time>
+            <pose>5.655 2.099 0 0 0 2.67795</pose>
+          </waypoint>
+          <waypoint>
+            <time>31.712</time>
+            <pose>5.002 2.729 0 0 0 2.95434</pose>
+          </waypoint>
+          <waypoint>
+            <time>34.546</time>
+            <pose>4.393 3.191 0 0 0 -2.93333</pose>
+          </waypoint>
+          <waypoint>
+            <time>36.584</time>
+            <pose>3.871 3.360 0 0 0 -2.52611</pose>
+          </waypoint>
+          <waypoint>
+            <time>38.199</time>
+            <pose>3.470 3.191 0 0 0 -2.20271</pose>
+          </waypoint>
+          <waypoint>
+            <time>40.151</time>
+            <pose>3.218 2.729 0 0 0 -1.93301</pose>
+          </waypoint>
+          <waypoint>
+            <time>42.514</time>
+            <pose>3.132 2.099 0 0 0 -1.57080</pose>
+          </waypoint>
+          <waypoint>
+            <time>44.876</time>
+            <pose>3.218 1.468 0 0 0 -0.61548</pose>
+          </waypoint>
+          <waypoint>
+            <time>46.828</time>
+            <pose>3.470 1.006 0 0 0 0.35088</pose>
+          </waypoint>
+          <waypoint>
+            <time>48.443</time>
+            <pose>3.871 0.837 0 0 0 0.61548</pose>
+          </waypoint>
+          <waypoint>
+            <time>50.481</time>
+            <pose>4.393 1.006 0 0 0 0.66780</pose>
+          </waypoint>
+          <waypoint>
+            <time>53.316</time>
+            <pose>5.002 1.468 0 0 0 0.61548</pose>
+          </waypoint>
+          <waypoint>
+            <time>56.685</time>
+            <pose>5.655 2.099 0 0 0 0.46365</pose>
+          </waypoint>
+        </trajectory>
+      </script>
+    </actor>
+
+    <actor name='human_24'>
+      <pose>0 0 1 0 0 0</pose>
+      <skin>
+        <filename>file://media/models/walk.dae</filename>
+        <scale>1</scale>
+      </skin>
+      <animation name='walking'>
+        <filename>file://media/models/walk.dae</filename>
+        <interpolate_x>0</interpolate_x>
+      </animation>
+      <script>
+        <loop>1</loop>
+        <auto_start>1</auto_start>
+        <trajectory id='0' type='walking'>
+          <waypoint>
+            <time>0.000</time>
+            <pose>-4.018 7.001 0 0 0 1.57080</pose>
+          </waypoint>
+          <waypoint>
+            <time>4.481</time>
+            <pose>-4.244 7.914 0 0 0 2.04777</pose>
+          </waypoint>
+          <waypoint>
+            <time>9.281</time>
+            <pose>-4.889 8.688 0 0 0 2.46592</pose>
+          </waypoint>
+          <waypoint>
+            <time>14.499</time>
+            <pose>-5.855 9.205 0 0 0 2.82104</pose>
+          </waypoint>
+          <waypoint>
+            <time>19.993</time>
+            <pose>-6.993 9.386 0 0 0 3.14159</pose>
+          </waypoint>
+          <waypoint>
+            <time>25.488</time>
+            <pose>-8.132 9.205 0 0 0 -2.82104</pose>
+          </waypoint>
+          <waypoint>
+            <time>30.706</time>
+            <pose>-9.097 8.688 0 0 0 -2.46592</pose>
+          </waypoint>
+          <waypoint>
+            <time>35.506</time>
+            <pose>-9.742 7.914 0 0 0 -2.04777</pose>
+          </waypoint>
+          <waypoint>
+            <time>39.987</time>
+            <pose>-9.969 7.001 0 0 0 -1.57080</pose>
+          </waypoint>
+          <waypoint>
+            <time>44.468</time>
+            <pose>-9.742 6.088 0 0 0 -1.09382</pose>
+          </waypoint>
+          <waypoint>
+            <time>49.268</time>
+            <pose>-9.097 5.315 0 0 0 -0.67568</pose>
+          </waypoint>
+          <waypoint>
+            <time>54.486</time>
+            <pose>-8.132 4.798 0 0 0 -0.32056</pose>
+          </waypoint>
+          <waypoint>
+            <time>59.980</time>
+            <pose>-6.993 4.616 0 0 0 -0.00000</pose>
+          </waypoint>
+          <waypoint>
+            <time>65.475</time>
+            <pose>-5.855 4.798 0 0 0 0.32056</pose>
+          </waypoint>
+          <waypoint>
+            <time>70.693</time>
+            <pose>-4.889 5.315 0 0 0 0.67568</pose>
+          </waypoint>
+          <waypoint>
+            <time>75.493</time>
+            <pose>-4.244 6.088 0 0 0 1.09382</pose>
+          </waypoint>
+          <waypoint>
+            <time>79.974</time>
+            <pose>-4.018 7.001 0 0 0 1.57080</pose>
+          </waypoint>
+        </trajectory>
+      </script>
+    </actor>
+
+    <actor name='human_25'>
+      <pose>0 0 1 0 0 0</pose>
+      <skin>
+        <filename>file://media/models/walk.dae</filename>
+        <scale>1</scale>
+      </skin>
+      <animation name='walking'>
+        <filename>file://media/models/walk.dae</filename>
+        <interpolate_x>0</interpolate_x>
+      </animation>
+      <script>
+        <loop>1</loop>
+        <auto_start>1</auto_start>
+        <trajectory id='0' type='walking'>
+          <waypoint>
+            <time>0.000</time>
+            <pose>-0.558 8.127 0 0 0 0.00000</pose>
+          </waypoint>
+          <waypoint>
+            <time>14.268</time>
+            <pose>4.185 8.127 0 0 0 1.57080</pose>
+          </waypoint>
+          <waypoint>
+            <time>24.036</time>
+            <pose>4.185 11.375 0 0 0 3.14159</pose>
+          </waypoint>
+          <waypoint>
+            <time>38.304</time>
+            <pose>-0.558 11.375 0 0 0 -1.57080</pose>
+          </waypoint>
+          <waypoint>
+            <time>48.073</time>
+            <pose>-0.558 8.127 0 0 0 0.00000</pose>
+          </waypoint>
+        </trajectory>
+      </script>
+    </actor>
+
+    <actor name='human_26'>
+      <pose>0 0 1 0 0 0</pose>
+      <skin>
+        <filename>file://media/models/walk.dae</filename>
+        <scale>1</scale>
+      </skin>
+      <animation name='walking'>
+        <filename>file://media/models/walk.dae</filename>
+        <interpolate_x>0</interpolate_x>
+      </animation>
+      <script>
+        <loop>1</loop>
+        <auto_start>1</auto_start>
+        <trajectory id='0' type='walking'>
+          <waypoint>
+            <time>0.000</time>
+            <pose>-2.673 7.221 0 0 0 -0.50155</pose>
+          </waypoint>
+          <waypoint>
+            <time>9.941</time>
+            <pose>1.547 4.907 0 0 0 -0.50155</pose>
+          </waypoint>
+          <waypoint>
+            <time>12.441</time>
+            <pose>1.547 4.907 0 0 0 2.64004</pose>
+          </waypoint>
+          <waypoint>
+            <time>22.382</time>
+            <pose>-2.673 7.221 0 0 0 2.64004</pose>
+          </waypoint>
+          <waypoint>
+            <time>24.882</time>
+            <pose>-2.673 7.221 0 0 0 -0.50155</pose>
+          </waypoint>
+        </trajectory>
+      </script>
+    </actor>
+
+    <actor name='human_27'>
+      <pose>0 0 1 0 0 0</pose>
+      <skin>
+        <filename>file://media/models/walk.dae</filename>
+        <scale>1</scale>
+      </skin>
+      <animation name='walking'>
+        <filename>file://media/models/walk.dae</filename>
+        <interpolate_x>0</interpolate_x>
+      </animation>
+      <script>
+        <loop>1</loop>
+        <auto_start>1</auto_start>
+        <trajectory id='0' type='walking'>
+          <waypoint>
+            <time>0.000</time>
+            <pose>4.696 4.443 0 0 0 0.46365</pose>
+          </waypoint>
+          <waypoint>
+            <time>2.377</time>
+            <pose>5.245 4.973 0 0 0 0.18725</pose>
+          </waypoint>
+          <waypoint>
+            <time>4.377</time>
+            <pose>5.757 5.362 0 0 0 -0.20826</pose>
+          </waypoint>
+          <waypoint>
+            <time>5.814</time>
+            <pose>6.196 5.504 0 0 0 -0.61548</pose>
+          </waypoint>
+          <waypoint>
+            <time>6.954</time>
+            <pose>6.533 5.362 0 0 0 -0.93888</pose>
+          </waypoint>
+          <waypoint>
+            <time>8.331</time>
+            <pose>6.745 4.973 0 0 0 -1.20858</pose>
+          </waypoint>
+          <waypoint>
+            <time>9.997</time>
+            <pose>6.818 4.443 0 0 0 -1.57080</pose>
+          </waypoint>
+          <waypoint>
+            <time>11.664</time>
+            <pose>6.745 3.912 0 0 0 -2.52611</pose>
+          </waypoint>
+          <waypoint>
+            <time>13.041</time>
+            <pose>6.533 3.524 0 0 0 2.79071</pose>
+          </waypoint>
+          <waypoint>
+            <time>14.180</time>
+            <pose>6.196 3.382 0 0 0 2.52611</pose>
+          </waypoint>
+          <waypoint>
+            <time>15.618</time>
+            <pose>5.757 3.524 0 0 0 2.47380</pose>
+          </waypoint>
+          <waypoint>
+            <time>17.618</time>
+            <pose>5.245 3.912 0 0 0 2.52611</pose>
+          </waypoint>
+          <waypoint>
+            <time>19.995</time>
+            <pose>4.696 4.443 0 0 0 2.67795</pose>
+          </waypoint>
+          <waypoint>
+            <time>22.371</time>
+            <pose>4.147 4.973 0 0 0 2.95434</pose>
+          </waypoint>
+          <waypoint>
+            <time>24.371</time>
+            <pose>3.635 5.362 0 0 0 -2.93333</pose>
+          </waypoint>
+          <waypoint>
+            <time>25.809</time>
+            <pose>3.196 5.504 0 0 0 -2.52611</pose>
+          </waypoint>
+          <waypoint>
+            <time>26.948</time>
+            <pose>2.858 5.362 0 0 0 -2.20271</pose>
+          </waypoint>
+          <waypoint>
+            <time>28.325</time>
+            <pose>2.646 4.973 0 0 0 -1.93301</pose>
+          </waypoint>
+          <waypoint>
+            <time>29.992</time>
+            <pose>2.574 4.443 0 0 0 -1.57080</pose>
+          </waypoint>
+          <waypoint>
+            <time>31.658</time>
+            <pose>2.646 3.912 0 0 0 -0.61548</pose>
+          </waypoint>
+          <waypoint>
+            <time>33.036</time>
+            <pose>2.858 3.524 0 0 0 0.35088</pose>
+          </waypoint>
+          <waypoint>
+            <time>34.175</time>
+            <pose>3.196 3.382 0 0 0 0.61548</pose>
+          </waypoint>
+          <waypoint>
+            <time>35.613</time>
+            <pose>3.635 3.524 0 0 0 0.66780</pose>
+          </waypoint>
+          <waypoint>
+            <time>37.612</time>
+            <pose>4.147 3.912 0 0 0 0.61548</pose>
+          </waypoint>
+          <waypoint>
+            <time>39.989</time>
+            <pose>4.696 4.443 0 0 0 0.46365</pose>
+          </waypoint>
+        </trajectory>
+      </script>
+    </actor>
+
+    <actor name='human_28'>
+      <pose>0 0 1 0 0 0</pose>
+      <skin>
+        <filename>file://media/models/walk.dae</filename>
+        <scale>1</scale>
+      </skin>
+      <animation name='walking'>
+        <filename>file://media/models/walk.dae</filename>
+        <interpolate_x>0</interpolate_x>
+      </animation>
+      <script>
+        <loop>1</loop>
+        <auto_start>1</auto_start>
+        <trajectory id='0' type='walking'>
+          <waypoint>
+            <time>0.000</time>
+            <pose>12.844 -0.856 0 0 0 1.57080</pose>
+          </waypoint>
+          <waypoint>
+            <time>4.842</time>
+            <pose>12.548 0.196 0 0 0 2.10162</pose>
+          </waypoint>
+          <waypoint>
+            <time>10.283</time>
+            <pose>11.703 1.088 0 0 0 2.52711</pose>
+          </waypoint>
+          <waypoint>
+            <time>16.473</time>
+            <pose>10.439 1.684 0 0 0 2.85724</pose>
+          </waypoint>
+          <waypoint>
+            <time>23.143</time>
+            <pose>8.947 1.894 0 0 0 3.14159</pose>
+          </waypoint>
+          <waypoint>
+            <time>29.812</time>
+            <pose>7.456 1.684 0 0 0 -2.85724</pose>
+          </waypoint>
+          <waypoint>
+            <time>36.002</time>
+            <pose>6.192 1.088 0 0 0 -2.52711</pose>
+          </waypoint>
+          <waypoint>
+            <time>41.443</time>
+            <pose>5.347 0.196 0 0 0 -2.10162</pose>
+          </waypoint>
+          <waypoint>
+            <time>46.285</time>
+            <pose>5.050 -0.856 0 0 0 -1.57080</pose>
+          </waypoint>
+          <waypoint>
+            <time>51.127</time>
+            <pose>5.347 -1.908 0 0 0 -1.03997</pose>
+          </waypoint>
+          <waypoint>
+            <time>56.568</time>
+            <pose>6.192 -2.801 0 0 0 -0.61448</pose>
+          </waypoint>
+          <waypoint>
+            <time>62.758</time>
+            <pose>7.456 -3.397 0 0 0 -0.28436</pose>
+          </waypoint>
+          <waypoint>
+            <time>69.428</time>
+            <pose>8.947 -3.606 0 0 0 -0.00000</pose>
+          </waypoint>
+          <waypoint>
+            <time>76.097</time>
+            <pose>10.439 -3.397 0 0 0 0.28436</pose>
+          </waypoint>
+          <waypoint>
+            <time>82.287</time>
+            <pose>11.703 -2.801 0 0 0 0.61448</pose>
+          </waypoint>
+          <waypoint>
+            <time>87.728</time>
+            <pose>12.548 -1.908 0 0 0 1.03997</pose>
+          </waypoint>
+          <waypoint>
+            <time>92.570</time>
+            <pose>12.844 -0.856 0 0 0 1.57080</pose>
+          </waypoint>
+        </trajectory>
+      </script>
+    </actor>
+
+    <actor name='human_29'>
+      <pose>0 0 1 0 0 0</pose>
+      <skin>
+        <filename>file://media/models/walk.dae</filename>
+        <scale>1</scale>
+      </skin>
+      <animation name='walking'>
+        <filename>file://media/models/walk.dae</filename>
+        <interpolate_x>0</interpolate_x>
+      </animation>
+      <script>
+        <loop>1</loop>
+        <auto_start>1</auto_start>
+        <trajectory id='0' type='walking'>
+          <waypoint>
+            <time>0.000</time>
+            <pose>5.300 4.024 0 0 0 0.74841</pose>
+          </waypoint>
+          <waypoint>
+            <time>16.298</time>
+            <pose>10.314 8.681 0 0 0 0.74841</pose>
+          </waypoint>
+          <waypoint>
+            <time>18.798</time>
+            <pose>10.314 8.681 0 0 0 3.89000</pose>
+          </waypoint>
+          <waypoint>
+            <time>35.095</time>
+            <pose>5.300 4.024 0 0 0 3.89000</pose>
+          </waypoint>
+          <waypoint>
+            <time>37.595</time>
+            <pose>5.300 4.024 0 0 0 0.74841</pose>
+          </waypoint>
+        </trajectory>
+      </script>
+    </actor>
+
+    <actor name='human_30'>
+      <pose>0 0 1 0 0 0</pose>
+      <skin>
+        <filename>file://media/models/walk.dae</filename>
+        <scale>1</scale>
+      </skin>
+      <animation name='walking'>
+        <filename>file://media/models/walk.dae</filename>
+        <interpolate_x>0</interpolate_x>
+      </animation>
+      <script>
+        <loop>1</loop>
+        <auto_start>1</auto_start>
+        <trajectory id='0' type='walking'>
+          <waypoint>
+            <time>0.000</time>
+            <pose>-1.223 3.287 0 0 0 1.57080</pose>
+          </waypoint>
+          <waypoint>
+            <time>3.423</time>
+            <pose>-1.456 4.252 0 0 0 2.03766</pose>
+          </waypoint>
+          <waypoint>
+            <time>7.059</time>
+            <pose>-2.121 5.070 0 0 0 2.45369</pose>
+          </waypoint>
+          <waypoint>
+            <time>10.975</time>
+            <pose>-3.117 5.616 0 0 0 2.81349</pose>
+          </waypoint>
+          <waypoint>
+            <time>15.078</time>
+            <pose>-4.291 5.808 0 0 0 3.14159</pose>
+          </waypoint>
+          <waypoint>
+            <time>19.180</time>
+            <pose>-5.465 5.616 0 0 0 -2.81349</pose>
+          </waypoint>
+          <waypoint>
+            <time>23.096</time>
+            <pose>-6.461 5.070 0 0 0 -2.45369</pose>
+          </waypoint>
+          <waypoint>
+            <time>26.732</time>
+            <pose>-7.126 4.252 0 0 0 -2.03766</pose>
+          </waypoint>
+          <waypoint>
+            <time>30.155</time>
+            <pose>-7.360 3.287 0 0 0 -1.57080</pose>
+          </waypoint>
+          <waypoint>
+            <time>33.579</time>
+            <pose>-7.126 2.322 0 0 0 -1.10394</pose>
+          </waypoint>
+          <waypoint>
+            <time>37.214</time>
+            <pose>-6.461 1.503 0 0 0 -0.68790</pose>
+          </waypoint>
+          <waypoint>
+            <time>41.130</time>
+            <pose>-5.465 0.957 0 0 0 -0.32810</pose>
+          </waypoint>
+          <waypoint>
+            <time>45.233</time>
+            <pose>-4.291 0.765 0 0 0 -0.00000</pose>
+          </waypoint>
+          <waypoint>
+            <time>49.335</time>
+            <pose>-3.117 0.957 0 0 0 0.32810</pose>
+          </waypoint>
+          <waypoint>
+            <time>53.251</time>
+            <pose>-2.121 1.503 0 0 0 0.68790</pose>
+          </waypoint>
+          <waypoint>
+            <time>56.887</time>
+            <pose>-1.456 2.322 0 0 0 1.10394</pose>
+          </waypoint>
+          <waypoint>
+            <time>60.310</time>
+            <pose>-1.223 3.287 0 0 0 1.57080</pose>
+          </waypoint>
+        </trajectory>
+      </script>
+    </actor>
+  </world>
+</sdf>

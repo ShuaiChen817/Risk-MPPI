@@ -1,0 +1,20 @@
+# colcon / ROS2 workspace artifacts
+build/
+install/
+log/
+
+# Python
+__pycache__/
+*.pyc
+
+# VSCode
+.vscode/
+
+# CMake / build helpers
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+compile_commands.json
+
+# Misc
+.DS_Store

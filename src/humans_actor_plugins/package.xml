@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<package format="3">
+  <name>humans_actor_plugins</name>
+  <version>0.0.1</version>
+  <description>Gazebo Classic actor plugin for wandering humans</description>
+
+  <maintainer email="justdoyourself2@gmail.com">you</maintainer>
+  <license>Apache-2.0</license>
+
+  <!-- 纯 Gazebo 插件，不需要 rclcpp。
+       用 gazebo_dev 提供头文件 & 链接库；用 ament_cmake 构建 -->
+  <buildtool_depend>ament_cmake</buildtool_depend>
+  <depend>gazebo_dev</depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>

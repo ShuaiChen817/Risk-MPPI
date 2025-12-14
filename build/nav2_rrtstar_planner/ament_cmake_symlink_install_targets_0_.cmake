@@ -1,1 +1,0 @@
-ament_cmake_symlink_install_targets("TARGET_FILES" "/home/shuai/turtlebot_ws/build/nav2_rrtstar_planner/libnav2_rrtstar_planner_plugin.so" "TARGETS" "nav2_rrtstar_planner_plugin" "ARCHIVE_DESTINATION" "lib" "LIBRARY_DESTINATION" "lib" "RUNTIME_DESTINATION" "lib/nav2_rrtstar_planner")
