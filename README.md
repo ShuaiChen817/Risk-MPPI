@@ -1,8 +1,8 @@
 # Risk-MPPI
 
-**Risk-aware mobile robot navigation with ROS 2, Nav2 and Model Predictive Path Integral control.**
+**Risk-aware mobile robot navigation with our custom RiskMPPI algorithm, ROS 2 and Nav2.**
 
-Risk-MPPI combines global planning, risk-map construction, candidate-path assessment and sampling-based local control for a TurtleBot3 in Gazebo Classic. RViz displays the selected path, sampled trajectories and risk distribution while the robot navigates among static obstacles and moving pedestrians.
+Risk-MPPI implements our own **RiskMPPI algorithm** for mobile robot navigation. It combines risk-map construction, risk-aware candidate-path assessment and sampling-based local control, using a Nav2 reference path and a TurtleBot3 in Gazebo Classic. RViz displays the selected path, sampled trajectories and risk distribution while the robot navigates among static obstacles and moving pedestrians.
 
 ## Demonstrations
 
@@ -17,37 +17,36 @@ The recordings show Gazebo and RViz together, including the robot, surrounding o
 
 ## Features
 
-- **Global planning:** Nav2's NavFn planner with A* enabled generates a reference path. The repository also includes an RRT* global-planner plugin under the project namespace.
+- **Reference-path generation:** Nav2's NavFn planner with A* enabled supplies the initial path for RiskMPPI's risk-aware path assessment.
 - **Risk maps:** choose a local-costmap-based risk field or a LiDAR-based risk map. Both publish `/risk_map`.
 - **Candidate-path assessment:** generate lateral alternatives around the reference path and rank them by length, risk and uncertainty.
-- **MPPI local control:** evaluate sampled control sequences with map-based costs; support Gaussian and log-normal sampling, with CUDA acceleration through PyCUDA.
+- **Our RiskMPPI algorithm:** integrate the risk field into sampled-trajectory evaluation and local control, following the reference path selected by risk-aware candidate-path assessment. The implementation supports Gaussian and log-normal sampling and CUDA acceleration through PyCUDA.
 - **Dynamic scenes:** generate pedestrian worlds, move cylinders and add pedestrian torso proxies for sensor visibility.
-- **Visualization:** display global/local paths, candidate paths, MPPI samples and risk markers in RViz.
+- **Visualization:** display global/local paths, candidate paths, RiskMPPI samples and risk markers in RViz.
 
 ## Navigation pipeline
 
 ```mermaid
 flowchart TD
-    A["RViz goal /goal_pose"] --> B["Nav2 global planner"]
+    A["RViz goal /goal_pose"] --> B["Nav2 reference-path generation"]
     B -->|/plan_raw| C["Candidate-path assessment"]
     D["Costmap or LiDAR risk map"] -->|/risk_map| C
-    C -->|/plan| E["Risk-MPPI local controller"]
+    C -->|/plan| E["RiskMPPI local controller"]
     D -->|/risk_map| E
     E -->|/cmd_vel| F["TurtleBot3 in Gazebo"]
 ```
 
-The Python MPPI controller drives the robot. In the documented workflow, Nav2's `controller_server` supplies the local costmap; its velocity output is remapped to `/cmd_vel_nav`. Goals are sent through RViz's **2D Goal Pose** tool rather than the Nav2 NavigateToPose action.
+Our Python RiskMPPI controller drives the robot. In the documented workflow, Nav2's `controller_server` supplies the local costmap; its velocity output is remapped to `/cmd_vel_nav`. Goals are sent through RViz's **2D Goal Pose** tool rather than the Nav2 NavigateToPose action.
 
 ## Repository layout
 
 | Location | Contents |
 | --- | --- |
-| `src/Risk-MPPI/nodes/` | MPPI controller, goal-to-plan bridge, risk-map builders, path assessor and visualization nodes |
+| `src/Risk-MPPI/nodes/` | RiskMPPI controller, goal-to-plan bridge, risk-map builders, path assessor and visualization nodes |
 | `src/Risk-MPPI/tools/` | World generation, obstacle spawning and pedestrian proxies |
 | `src/Risk-MPPI/experiments/` | Preserved alternative controllers, diagnostics and earlier versions |
 | `src/Risk-MPPI/launch/` | Gazebo, manual Nav2 and alternative-controller launch files |
 | `src/Risk-MPPI/world/`, `models/`, `robot/`, `rviz/` | Simulation and visualization resources |
-| `src/Risk-MPPI/src/`, `include/` | RRT* global-planner implementation, renamed `RiskGlobalPlanner` |
 | `src/humans_actor_plugins/` | Gazebo actor plugin |
 | `tools/env.sh` | Per-terminal environment setup |
 | `docs/videos/`, `docs/images/` | Demonstration videos and previews |
@@ -58,11 +57,11 @@ The repository and source directory are named **Risk-MPPI**. The ROS package is 
 
 - Ubuntu 22.04 and **ROS 2 Humble**.
 - **Gazebo Classic 11**, Gazebo ROS integration and TurtleBot3 simulation packages.
-- Nav2, including NavFn and the Nav2 MPPI controller plugin used by `nav2_params.yaml`.
+- Nav2 with NavFn for reference-path generation. The existing `controller_server` configuration also requires the `nav2_mppi_controller` package to load; robot velocity commands in this workflow come from our RiskMPPI node.
 - Python 3.10 with NumPy, SciPy and Jinja2.
 - For GPU execution: an NVIDIA GPU, compatible driver, CUDA toolkit with `nvcc`, and PyCUDA installed for the Python interpreter running the controller.
 
-The controller includes a CPU fallback when PyCUDA cannot be imported. The demonstration configuration uses 1,024 samples at 30 Hz; The CPU path caps sampling at 48 trajectories; performance depends on the machine. CUDA initialization or compilation errors require fixing the GPU environment.
+The controller includes a CPU fallback when PyCUDA cannot be imported. The demonstration configuration uses 1,024 samples at 30 Hz. The CPU path caps sampling at 48 trajectories; performance depends on the machine. CUDA initialization or compilation errors require fixing the GPU environment.
 
 ## Installation
 
@@ -181,7 +180,7 @@ python3 "$RISK_MPPI_PKG/nodes/scan_risk_map_builder.py" \
 
 Run one builder at a time because both publish `/risk_map`.
 
-### Terminal 6 — CUDA environment and MPPI controller
+### Terminal 6 — CUDA environment and RiskMPPI controller
 
 For GPU execution, adjust `CUDA_HOME` to your installed toolkit:
 
@@ -199,7 +198,7 @@ python3 "$RISK_MPPI_PKG/nodes/test_mppi.py" \
   --ros-args -p use_sim_time:=true
 ```
 
-Keep only one MPPI/local controller publishing `/cmd_vel`. The preserved `log_mppi_node.py` and other controller variants are alternatives to `test_mppi.py`.
+Keep only one RiskMPPI/local controller publishing `/cmd_vel`. The preserved `log_mppi_node.py` and other controller variants are alternatives to `test_mppi.py`.
 
 ### Terminal 7 — dynamic obstacles or pedestrian proxies
 
@@ -238,7 +237,7 @@ python3 "$RISK_MPPI_PKG/nodes/global_path_assessor.py" \
   --ros-args -p use_sim_time:=true
 ```
 
-This node evaluates `/plan_raw` against `/risk_map` and publishes the selected path on `/plan`. The MPPI node receives its reference path from this topic.
+This node evaluates `/plan_raw` against `/risk_map` and publishes the selected path on `/plan`. The RiskMPPI node receives its reference path from this topic.
 
 ### Terminal 9 — RViz
 
@@ -261,16 +260,15 @@ python3 "$RISK_MPPI_PKG/nodes/riskmap_marker_viz.py" \
 | Setting | Location / default |
 | --- | --- |
 | Global planner | `nav2_params.yaml`: `nav2_navfn_planner/NavfnPlanner`, `use_astar: true` |
-| Alternative RRT* plugin | `nav2_risk_mppi/RiskGlobalPlanner`; not selected by the default YAML |
 | Candidate lateral offsets | `global_path_assessor.py`: `[-0.6, -0.3, 0.0, 0.3, 0.6]` m |
 | Path ranking weights | length `1.0`, risk `3.0`, uncertainty `2.0` |
-| MPPI samples / horizon | `test_mppi.py`: `1024` / `1.1` s |
-| MPPI control frequency | `30.0` Hz |
+| RiskMPPI samples / horizon | `test_mppi.py`: `1024` / `1.1` s |
+| RiskMPPI control frequency | `30.0` Hz |
 | Risk-map topic | `/risk_map` |
 
-The renamed C++ global planner retains its **RRT*** algorithm. The **MPPI** algorithm is implemented in `nodes/mppi_controller.py` and used by the Python controller nodes.
+Our **RiskMPPI algorithm** combines the risk maps and candidate-path assessment with the local controller implemented in `nodes/mppi_controller.py`, launched by `nodes/test_mppi.py`. The existing Python filenames are retained for the startup commands.
 
-The candidate-path assessor currently ranks paths by soft costs; its hard risk-threshold rejection block is disabled in the preserved implementation. Path offsets are geometric alternatives rather than a collision-certified replanning method. The MPPI controller applies its own map-based collision/risk costs.
+The candidate-path assessor currently ranks paths by soft costs; its hard risk-threshold rejection block is disabled in the preserved implementation. Path offsets are geometric alternatives rather than a collision-certified replanning method. The RiskMPPI controller applies its own map-based collision/risk costs.
 
 To stop, press **Ctrl+C** in the running terminals, starting with the controller. Restart Gazebo and the navigation launch files, then repeat the lifecycle transitions when resetting a run.
 
