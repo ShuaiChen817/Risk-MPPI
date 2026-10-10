@@ -1,6 +1,6 @@
 # Risk-MPPI
 
-**Risk-aware mobile robot navigation with our custom RiskMPPI algorithm, ROS 2 and Nav2.**
+**Risk-aware mobile robot navigation with our custom RiskMPPI algorithm and ROS 2.**
 
 Risk-MPPI implements our own **RiskMPPI algorithm** for mobile robot navigation. It combines risk-map construction, risk-aware candidate-path assessment and sampling-based local control, using a Nav2 reference path and a TurtleBot3 in Gazebo Classic. RViz displays the selected path, sampled trajectories and risk distribution while the robot navigates among static obstacles and moving pedestrians.
 
@@ -18,7 +18,7 @@ The recordings show Gazebo and RViz together, including the robot, surrounding o
 ## Features
 
 - **Reference-path generation:** Nav2's NavFn planner with A* enabled supplies the initial path for RiskMPPI's risk-aware path assessment.
-- **Risk maps:** choose a local-costmap-based risk field or a LiDAR-based risk map. Both publish `/risk_map`.
+- **Risk maps:** construct a LiDAR-based risk map and publish it on `/risk_map`.
 - **Candidate-path assessment:** generate lateral alternatives around the reference path and rank them by length, risk and uncertainty.
 - **Our RiskMPPI algorithm:** integrate the risk field into sampled-trajectory evaluation and local control, following the reference path selected by risk-aware candidate-path assessment. The implementation supports Gaussian and log-normal sampling and CUDA acceleration through PyCUDA.
 - **Dynamic scenes:** generate pedestrian worlds, move cylinders and add pedestrian torso proxies for sensor visibility.
