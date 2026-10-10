@@ -1,6 +1,6 @@
 # Risk-MPPI
 
-**Risk-aware mobile robot navigation with ROS 2, Nav2 and Model Predictive Path Integral control.**
+**Risk-aware mobile robot navigation with ROS 2 Model Predictive Path Integral control.**
 
 Risk-MPPI combines global planning, risk-map construction, candidate-path assessment and sampling-based local control for a TurtleBot3 in Gazebo Classic. RViz displays the selected path, sampled trajectories and risk distribution while the robot navigates among static obstacles and moving pedestrians.
 
