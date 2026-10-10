@@ -17,8 +17,8 @@ The recordings show Gazebo and RViz together, including the robot, surrounding o
 
 ## Features
 
-- **Global planning:** Nav2's NavFn planner with A* enabled generates a reference path. The repository also includes an RRT* global-planner plugin under the project namespace.
-- **Risk maps:** choose a local-costmap-based risk field or a LiDAR-based risk map. Both publish `/risk_map`.
+- **Global planning:** Nav2's NavFn planner with A* enabled generates a reference path. 
+- **Risk maps:** choose a LiDAR-based risk map. It published `/risk_map`.
 - **Candidate-path assessment:** generate lateral alternatives around the reference path and rank them by length, risk and uncertainty.
 - **MPPI local control:** evaluate sampled control sequences with map-based costs; support Gaussian and log-normal sampling, with CUDA acceleration through PyCUDA.
 - **Dynamic scenes:** generate pedestrian worlds, move cylinders and add pedestrian torso proxies for sensor visibility.
