@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.5)
-project(nav2_rrtstar_planner)
+project(nav2_risk_mppi)
 
 # Default to C99
 set(CMAKE_C_STANDARD 99)
@@ -49,7 +49,7 @@ set(dependencies
 )
 
 add_library(${library_name} SHARED
-  src/rrtstar_planner.cpp
+  src/risk_global_planner.cpp
 )
 
 ament_target_dependencies(${library_name}
@@ -90,10 +90,8 @@ endif()
 ament_export_include_directories(include)
 ament_export_libraries(${library_name})
 ament_export_dependencies(${dependencies})
-ament_package()
-
-# 安装 launch 文件
-install(
-  DIRECTORY launch
+install(DIRECTORY launch world models robot rviz nodes tools experiments
   DESTINATION share/${PROJECT_NAME}
 )
+install(FILES nav2_params.yaml DESTINATION share/${PROJECT_NAME})
+ament_package()

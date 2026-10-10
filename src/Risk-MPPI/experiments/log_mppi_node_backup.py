@@ -15,6 +15,9 @@ from std_msgs.msg import Bool
 from tf2_ros import Buffer, TransformListener
 import tf2_geometry_msgs
 
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "nodes"))
 from mppi_controller import TurtleBot3MPPI
 
 class LogMPPIControllerNode(Node):

@@ -245,7 +245,6 @@ class TurtleBot3MPPI:
 
 
     def rollouts(self, state, cost_params):
-        from pycuda import gpuarray, driver as cuda, cumath
         """执行轨迹采样和评估"""
         if CUDA_AVAILABLE and hasattr(self, 'rollout_kernel') and (self.obstacle_grid_d is not None):
             return self.cuda_rollouts(state, cost_params)

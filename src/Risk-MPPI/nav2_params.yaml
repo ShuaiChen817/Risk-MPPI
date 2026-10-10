@@ -343,10 +343,10 @@ planner_server:
     #   tolerance: 0.5
     #   use_astar: false
     #   allow_unknown: true
-    #planner_plugins: ['RRTStar']
+    #planner_plugins: ['RiskGlobalPlanner']
     
     # GridBased:
-    #   plugin: 'nav2_rrtstar_planner/RRTStar'
+    #   plugin: 'nav2_risk_mppi/RiskGlobalPlanner'
     #   interpolation_resolution: 0.05 #0.01
     #   max_iterations: 1000
     

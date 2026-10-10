@@ -1,0 +1,5 @@
+<library path="nav2_risk_mppi_plugin">
+	<class name="nav2_risk_mppi/RiskGlobalPlanner" type="nav2_risk_mppi::RiskGlobalPlanner" base_class_type="nav2_core::GlobalPlanner">
+	  <description>This is a plugin for RRT Star path planning.</description>
+	</class>
+</library>

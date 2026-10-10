@@ -76,7 +76,7 @@ class GlobalPathAssessor(Node):
             self.lateral_offsets = [0.0]
 
         self.risk_collision_threshold = float(
-            self.get_parameter('risk_collision_threshold').get_parameter_value().double_value
+            self.get_parameter('risk_collision_threshold').value
         )
         self.unknown_as_high_risk = float(
             self.get_parameter('unknown_as_high_risk').get_parameter_value().double_value

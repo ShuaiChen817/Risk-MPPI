@@ -12,7 +12,7 @@ riskmap_marker_viz.py
 
 使用方式：
 - 单独开一个终端运行本节点：
-    python3 src/TurtleBot-RRT-Star/scripts/riskmap_marker_viz.py
+    python3 src/Risk-MPPI/nodes/riskmap_marker_viz.py
 
 - 在 RViz 中：
     1) 不再显示 /risk_map 的 OccupancyGrid（可以直接 Remove 掉）

@@ -1,0 +1,6 @@
+# Python 3.10 / ROS 2 Humble; use apt dependencies in README for the default setup.
+numpy>=1.21,<2
+scipy>=1.8,<2
+Jinja2>=3,<4
+# Optional GPU backend; requires an independently installed CUDA toolkit/driver.
+# pycuda

@@ -201,7 +201,7 @@ def main():
                     help='与任意已有模型的最小间距（米）')
     ap.add_argument('--z', type=float, default=DEFAULT_Z, help='spawn 与运动高度（米）')
     ap.add_argument('--sdf', type=str, required=True,
-                    help='圆柱 SDF 路径，比如 ~/turtlebot_ws/src/TurtleBot-RRT-Star/world/cylinder_model/model.sdf')
+                    help='圆柱 SDF 路径，比如 ~/turtlebot_ws/src/Risk-MPPI/world/cylinder_model/model.sdf')
     ap.add_argument('--prefix', type=str, default=DEFAULT_PREFIX, help='名称前缀（默认 cyl_m_）')
     ap.add_argument('--ax', type=float, default=DEFAULT_AX, help='椭圆半轴 a')
     ap.add_argument('--by', type=float, default=DEFAULT_BY, help='椭圆半轴 b')

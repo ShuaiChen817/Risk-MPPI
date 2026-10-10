@@ -1,5 +1,5 @@
-#ifndef NAV2_RRTSTAR_PLANNER__RRTSTAR_PLANNER_HPP_
-#define NAV2_RRTSTAR_PLANNER__RRTSTAR_PLANNER_HPP_
+#ifndef NAV2_RISK_MPPI__RISK_GLOBAL_PLANNER_HPP_
+#define NAV2_RISK_MPPI__RISK_GLOBAL_PLANNER_HPP_
 
 #include <string>
 #include <memory>
@@ -11,7 +11,7 @@
 #include "geometry_msgs/msg/pose_stamped.hpp"
 #include "nav_msgs/msg/path.hpp"
 
-namespace nav2_rrtstar_planner {
+namespace nav2_risk_mppi {
 
 struct Vertex {
     double x, y, cost;
@@ -20,10 +20,10 @@ struct Vertex {
         x(x_val), y(y_val), parent(p), cost(travel_distance) {}
 };
 
-class RRTStar : public nav2_core::GlobalPlanner {
+class RiskGlobalPlanner : public nav2_core::GlobalPlanner {
 public:
-    RRTStar() = default;
-    ~RRTStar() override = default;
+    RiskGlobalPlanner() = default;
+    ~RiskGlobalPlanner() override = default;
 
     void configure(const rclcpp_lifecycle::LifecycleNode::WeakPtr& parent,
                    std::string name, std::shared_ptr<tf2_ros::Buffer> tf,
@@ -55,6 +55,6 @@ protected:
     double calculate_cost_from_start(const Vertex& vertex);
 };
 
-}  // namespace nav2_rrtstar_planner
+}  // namespace nav2_risk_mppi
 
-#endif  // NAV2_RRTSTAR_PLANNER__RRTSTAR_PLANNER_HPP_
+#endif  // NAV2_RISK_MPPI__RISK_GLOBAL_PLANNER_HPP_

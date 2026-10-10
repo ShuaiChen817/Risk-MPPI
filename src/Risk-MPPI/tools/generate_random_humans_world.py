@@ -6,7 +6,7 @@
 随机生成 N 个行走人物（actor），并覆盖写回该 world 文件。
 
 特点：
-- 每次运行都会重新随机生成 50 个 human_XX
+- 每次运行都会重新随机生成 N_ACTORS 个 human_XX
 - 轨迹类型混合：直线、斜线、矩形、近似椭圆、8 字形
 - 人物始终“面朝运动方向”（yaw 按切向方向设置）
 
@@ -14,8 +14,8 @@
 
   cd ~/turtlebot_ws
   source install/setup.bash
-  python3 src/TurtleBot-RRT-Star/scripts/generate_random_humans_world.py
-  ros2 launch nav2_rrtstar_planner world.launch.py
+  python3 src/Risk-MPPI/tools/generate_random_humans_world.py
+  ros2 launch nav2_risk_mppi world.launch.py
 """
 
 import math
@@ -321,10 +321,10 @@ def generate_world_with_random_humans(world_path: Path, n_actors: int = N_ACTORS
 
 
 def main():
-    # 假定脚本位置为 <ws_root>/src/TurtleBot-RRT-Star/scripts/ 下
-    # parents[3] 即工作空间根目录（包含 src/）
-    ws_root = Path(__file__).resolve().parents[3]
-    world_path = ws_root / "src" / "TurtleBot-RRT-Star" / "world" / "three_walking_humans.world"
+    # 假定脚本位置为 <ws_root>/src/Risk-MPPI/tools/ 下
+    # 使用脚本所在包的资源目录，不依赖工作空间名称。
+    package_root = Path(__file__).resolve().parents[1]
+    world_path = package_root / "world" / "three_walking_humans.world"
     if not world_path.exists():
         raise FileNotFoundError(f"未找到 world 文件: {world_path}")
 

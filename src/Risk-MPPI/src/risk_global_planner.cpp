@@ -6,19 +6,19 @@
 #include <vector>
 #include <limits>
 
-#include "nav2_rrtstar_planner/rrtstar_planner.hpp"
+#include "nav2_risk_mppi/risk_global_planner.hpp"
 
-namespace nav2_rrtstar_planner
+namespace nav2_risk_mppi
 {
 
-void RRTStar::configure(
+void RiskGlobalPlanner::configure(
   const rclcpp_lifecycle::LifecycleNode::WeakPtr & parent,
   std::string name, std::shared_ptr<tf2_ros::Buffer> tf,
   std::shared_ptr<nav2_costmap_2d::Costmap2DROS> costmap_ros)
 {
   node_ = parent.lock();
   if (!node_) {
-    RCLCPP_ERROR(rclcpp::get_logger("RRTStar"), "Failed to lock parent node in configure; parent is expired.");
+    RCLCPP_ERROR(rclcpp::get_logger("RiskGlobalPlanner"), "Failed to lock parent node in configure; parent is expired.");
     return;  // or consider throwing an exception if this is a critical failure
   }
   name_ = name;
@@ -33,28 +33,28 @@ void RRTStar::configure(
   node_->get_parameter(name_ + ".interpolation_resolution", interpolation_resolution_);
 }
 
-void RRTStar::cleanup()
+void RiskGlobalPlanner::cleanup()
 {
   RCLCPP_INFO(
     node_->get_logger(), "CleaningUp plugin %s of type NavfnPlanner",
     name_.c_str());
 }
 
-void RRTStar::activate()
+void RiskGlobalPlanner::activate()
 {
   RCLCPP_INFO(
     node_->get_logger(), "Activating plugin %s of type NavfnPlanner",
     name_.c_str());
 }
 
-void RRTStar::deactivate()
+void RiskGlobalPlanner::deactivate()
 {
   RCLCPP_INFO(
     node_->get_logger(), "Deactivating plugin %s of type NavfnPlanner",
     name_.c_str());
 }
 
-void RRTStar::calculateBallRadiusConstant() {
+void RiskGlobalPlanner::calculateBallRadiusConstant() {
     double resolution = costmap_->getResolution();
     double cellArea = resolution * resolution;
     unsigned int numFreeCells = 0;
@@ -73,13 +73,13 @@ void RRTStar::calculateBallRadiusConstant() {
     ball_radius_constant_ = 2.0 * (1 + 1.0 / dimensions) * std::pow((freeVolume / vUnitBall), (1.0 / dimensions));
 }
 
-double RRTStar::calculateBallRadius(int tree_size, int dimensions, double max_connection_distance) {
+double RiskGlobalPlanner::calculateBallRadius(int tree_size, int dimensions, double max_connection_distance) {
     double term1 = (ball_radius_constant_ * std::log(tree_size)) / tree_size;
     double term2 = std::pow(term1, 1.0 / dimensions);
     return std::min(term2, max_connection_distance);
 }
 
-std::vector<int> RRTStar::findVerticesInsideCircle(double center_x, double center_y, double radius) {
+std::vector<int> RiskGlobalPlanner::findVerticesInsideCircle(double center_x, double center_y, double radius) {
     std::vector<int> vertices_inside_circle;
     double radius_squared = radius * radius;
 
@@ -94,11 +94,11 @@ std::vector<int> RRTStar::findVerticesInsideCircle(double center_x, double cente
 }
 
 
-double RRTStar::calculate_distance(double x, double y, const Vertex& vertex) {
+double RiskGlobalPlanner::calculate_distance(double x, double y, const Vertex& vertex) {
     return std::sqrt(std::pow(vertex.x - x, 2) + std::pow(vertex.y - y, 2));
 }
 
-Vertex* RRTStar::nearest_neighbor(double x, double y) {
+Vertex* RiskGlobalPlanner::nearest_neighbor(double x, double y) {
     Vertex* nearest_vertex = nullptr;
     double min_dist = std::numeric_limits<double>::infinity();
 
@@ -114,7 +114,7 @@ Vertex* RRTStar::nearest_neighbor(double x, double y) {
 }
 
 
-bool RRTStar::connectible(const Vertex& start, const Vertex& end) {
+bool RiskGlobalPlanner::connectible(const Vertex& start, const Vertex& end) {
     double resolution = interpolation_resolution_;
     double steps = std::ceil(std::hypot(end.x - start.x, end.y - start.y) / resolution);
     if (steps > 0){
@@ -133,7 +133,7 @@ bool RRTStar::connectible(const Vertex& start, const Vertex& end) {
     return true;
 }
 
-double RRTStar::calculate_cost_from_start(const Vertex& vertex) {
+double RiskGlobalPlanner::calculate_cost_from_start(const Vertex& vertex) {
     double total_cost = 0.0;
 
     const Vertex* cur_ver = &vertex;
@@ -146,7 +146,7 @@ double RRTStar::calculate_cost_from_start(const Vertex& vertex) {
     return total_cost;
 }
 
-nav_msgs::msg::Path RRTStar::createPlan(
+nav_msgs::msg::Path RiskGlobalPlanner::createPlan(
   const geometry_msgs::msg::PoseStamped & start,
   const geometry_msgs::msg::PoseStamped & goal)
 {
@@ -315,7 +315,7 @@ nav_msgs::msg::Path RRTStar::createPlan(
 }
 
 
-}  // namespace nav2_rrtstar_planner
+}  // namespace nav2_risk_mppi
 
 #include "pluginlib/class_list_macros.hpp"
-PLUGINLIB_EXPORT_CLASS(nav2_rrtstar_planner::RRTStar, nav2_core::GlobalPlanner)
+PLUGINLIB_EXPORT_CLASS(nav2_risk_mppi::RiskGlobalPlanner, nav2_core::GlobalPlanner)

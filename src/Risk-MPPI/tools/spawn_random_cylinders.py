@@ -120,7 +120,7 @@ class RandCylSpawner(Node):
         print('names =', json.dumps(names, ensure_ascii=False))
         print('centers_json =', json.dumps(centers, ensure_ascii=False))
         print('\n接下来运行 dynamic_obstacle_manager.py，例如：')
-        print('python3 ~/turtlebot_ws/src/TurtleBot-RRT-Star/scripts/dynamic_obstacle_manager.py --ros-args \\')
+        print('python3 ~/turtlebot_ws/src/Risk-MPPI/tools/dynamic_obstacle_manager.py --ros-args \\')
         print(f"  -p names:='{json.dumps(names)}' \\")
         print(f"  -p centers:='{json.dumps(centers)}' \\")
         print("  -p ellipse_axes:='[0.6,0.4]' -p omega:=0.35 -p z:=0.0 -p rate_hz:=30.0")
@@ -139,7 +139,7 @@ def main():
                     help='与任意已有模型的最小间距（米）')
     ap.add_argument('--z', type=float, default=DEFAULT_Z, help='spawn 高度（米）')
     ap.add_argument('--sdf', type=str, required=True,
-                    help='圆柱 SDF 路径（例如 ~/turtlebot_ws/src/TurtleBot-RRT-Star/world/cylinder_model/model.sdf）')
+                    help='圆柱 SDF 路径（例如 ~/turtlebot_ws/src/Risk-MPPI/world/cylinder_model/model.sdf）')
     ap.add_argument('--prefix', type=str, default=DEFAULT_PREFIX, help='名称前缀')
     ap.add_argument('--seed', type=int, default=None, help='随机数种子（可复现）')
     args = ap.parse_args()
