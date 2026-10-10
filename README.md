@@ -10,8 +10,8 @@ Click a preview to open the original video.
 
 | Forest environment | Pedestrian environment |
 | --- | --- |
-| [![Forest navigation](docs/images/demo-357.jpg)](docs/videos/357.mp4) | [![Pedestrian navigation](docs/images/demo-358.jpg)](docs/videos/358.mp4) |
-| [Watch video · 31 s](docs/videos/357.mp4) | [Watch video · 38 s](docs/videos/358.mp4) |
+| [![Forest navigation](docs/images/forest.jpg)](docs/videos/forest.mp4) | [![Pedestrian navigation](docs/images/human.jpg)](docs/videos/human.mp4) |
+| [Watch video · 31 s](docs/videos/forest.mp4) | [Watch video · 38 s](docs/videos/human.mp4) |
 
 The recordings show Gazebo and RViz together, including the robot, surrounding obstacles and navigation visualizations.
 
